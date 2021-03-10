@@ -66,6 +66,17 @@ void heapify_to_bottom(min_heap *h, int parent){
     }
 }
 
+void edit_element(min_heap* h, int index, int element)
+{
+    h->arr[index] = element;
+    if ((index != 0)&&(h->arr[(index-1)/2] > h->arr[index])){
+        heapify(h, index);
+    } else if ((h->arr[index]>h->arr[index*2+1])||
+               (h->arr[index]>h->arr[index*2+2])){
+        heapify_to_bottom(h, index);
+    }
+}
+
 int main()
 {
     min_heap* h = (min_heap*)malloc(sizeof(min_heap));
@@ -73,13 +84,11 @@ int main()
     h->capacity = HEAP_SIZE;
     h->arr = (int*)malloc(h->capacity*sizeof(int));
 
-    insert(h,3);
-    insert(h,2);
-    insert(h,1);
-    insert(h,15);
+    insert(h,10);
     insert(h,5);
-    insert(h,4);
-    insert(h,45);
+    insert(h,20);
+    insert(h,100);
+    edit_element(h,1,200);
     printf("min : %d\n", PopMin(h));
     printf("min : %d\n", PopMin(h));
     return 0;
